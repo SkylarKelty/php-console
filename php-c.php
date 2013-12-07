@@ -16,13 +16,6 @@ $overrides = array(
 	}
 );
 
-/**
- * Parse some PHP
- */
-function parse($str) {
-	eval(trim($str));
-}
-
 // Start Basic Shell
 $in = '';
 while ($in != "quit" && $in != "^D") {
@@ -38,7 +31,7 @@ while ($in != "quit" && $in != "^D") {
 		continue;
 	}
 
-	// Parse and complete iteration
-	echo parse($in);
+	// Parse
+	echo eval(trim($in));
 	echo "\n";
 }
