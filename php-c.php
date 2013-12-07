@@ -9,12 +9,20 @@ if (file_exists("vendor/autoload.php")) {
 	include("vendor/autoload.php");
 }
 
-// Basic Shell
-$fp = fopen("php://stdin", "r");
+/**
+ * Parse some PHP
+ */
+function parse($str) {
+	eval(trim($str));
+}
+
+// Start Basic Shell
 $in = '';
-while ($in != "quit") {
-	echo "php> ";
-	$in = trim(fgets($fp));
-	eval ($in);
+while ($in != "quit" && $in != "^D") {
+	// Read a line
+	$in = readline("php> ");
+
+	// Parse and complete iteration
+	echo parse($in);
 	echo "\n";
 }
