@@ -48,6 +48,8 @@ $in = '';
 while (true) {
 	// Read a line
 	$in = readline($prompt);
+	$in = trim($in);
+	$lastChar = substr($in, -1);
 
 	if ($in == "quit" || $in == "exit") {
 		break;
@@ -82,23 +84,34 @@ while (true) {
 	}
 
 	// Are we already building something?
-	if ($braceCount > 0) {
+	if (!empty($buffer)) {
 		$buffer .= $in;
-		if (strrpos($in, "{") === strlen($in) - 1) {
+		if ($lastChar == '{') {
 			$braceCount++;
+		}
+		if ($braceCount == 0 && $lastChar == ';') {
+			echo eval(trim($buffer));
+			echo "\n";
+			$buffer = '';
 		}
 		continue;
 	}
 
 	// Are we building something?
-	if (strrpos($in, "{") === strlen($in) - 1) {
-		$prompt = "php { \t";
+	if ($lastChar == '{') {
+		$prompt = "php { ";
 		$buffer = $in;
 		$braceCount++;
 		continue;
 	}
 
+	// Are we building something else?
+	if ($lastChar != ';') {
+		$buffer .= $in;
+		continue;
+	}
+
 	// Eval
-	echo eval(trim($in));
+	echo eval($in);
 	echo "\n";
 }
