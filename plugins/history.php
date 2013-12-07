@@ -24,8 +24,14 @@ class history extends phpc_plugin
 				readline_add_history($line);
 			}
 			fclose($fp);
+			if (VERBOSE) {
+				echo "Loaded history file...\n";
+			}
 		} else {
 			touch($this->_history_file);
+			if (VERBOSE) {
+				echo "Created history file...\n";
+			}
 		}
 	}
 
