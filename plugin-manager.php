@@ -57,6 +57,13 @@ class phpc_pugin_manager
 	}
 
 	/**
+	 * Returns all plugins
+	 */
+	public function getPlugins() {
+		return $this->_plugins;
+	}
+
+	/**
 	 * Fire an event
 	 */
 	public function fire($event) {

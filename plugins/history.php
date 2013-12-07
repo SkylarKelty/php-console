@@ -33,7 +33,7 @@ class history extends phpc_plugin
 		$this->_history_fp = fopen($this->_history_file, "a");
 	}
 
-	public function onMessage($str = '') {
+	public function onMessage($str = '', $consumed = false) {
 		// Support clh (clear history)
 		if ($str == "clh") {
 			readline_clear_history();

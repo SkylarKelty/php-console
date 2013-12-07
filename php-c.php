@@ -22,6 +22,19 @@ while ($in != "quit" && $in != "^D") {
 	// Read a line
 	$in = readline("php> ");
 
+	// Fire message event on plugins
+	$consumed = false;
+	foreach ($pmgr->getPlugins() as $plugin) {
+		if ($plugin->onMessage($in, $consumed) === true) {
+			$consumed = true;
+		}
+	}
+
+	// Allow plugins to consume messages
+	if ($consumed) {
+		continue;
+	}
+
 	// Parse
 	echo eval(trim($in));
 	echo "\n";

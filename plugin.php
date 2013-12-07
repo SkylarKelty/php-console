@@ -13,7 +13,7 @@ abstract class phpc_plugin
 
 	public function onLoad() {	}
 	public function onStart() { }
-	public function onMessage($str = '') { }
+	public function onMessage($str = '', $consumed = false) { }
 	public function onEnd() { }
 
 	public final function getManager() {
