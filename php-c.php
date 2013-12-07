@@ -24,7 +24,7 @@ if (file_exists("vendor/autoload.php")) {
 }
 
 // Load up the plugin manager
-require_once("plugin-manager.php");
+require_once(dirname(__FILE__) . "/plugin-manager.php");
 $pmgr = phpc_pugin_manager::obtain();
 $pmgr->loadAll();
 
