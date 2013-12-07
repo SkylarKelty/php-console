@@ -75,7 +75,7 @@ while (true) {
 			echo eval(trim($buffer));
 			echo "\n";
 			$buffer = '';
-			$prompt = "php> ";
+			$prompt = "php > ";
 		}
 
 		continue;
@@ -92,7 +92,7 @@ while (true) {
 
 	// Are we building something?
 	if (strrpos($in, "{") === strlen($in) - 1) {
-		$prompt = "php { ";
+		$prompt = "php { \t";
 		$buffer = $in;
 		$braceCount++;
 		continue;
