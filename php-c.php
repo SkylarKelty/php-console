@@ -53,17 +53,20 @@ while (true) {
 		break;
 	}
 
-	// Fire message event on plugins
-	$consumed = false;
-	foreach ($pmgr->getPlugins() as $plugin) {
-		if ($plugin->onMessage($in, $consumed) === true) {
-			$consumed = true;
+	// Let plugins intervene if we have an empty buffer
+	if (empty($buffer)) {
+		// Fire message event on plugins
+		$consumed = false;
+		foreach ($pmgr->getPlugins() as $plugin) {
+			if ($plugin->onMessage($in, $consumed) === true) {
+				$consumed = true;
+			}
 		}
-	}
 
-	// Allow plugins to consume messages
-	if ($consumed) {
-		continue;
+		// Allow plugins to consume messages
+		if ($consumed) {
+			continue;
+		}
 	}
 
 	$buffer .= $in;
