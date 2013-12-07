@@ -31,15 +31,6 @@ $pmgr->loadAll();
 
 $pmgr->fire("onStart");
 
-// Register a shutdown function
-register_shutdown_function(function() {
-	if (VERBOSE) {
-		echo "Exited Cleanly\n";
-	}
-	$pmgr = phpc_pugin_manager::obtain();
-	$pmgr->fire("onEnd");
-});
-
 // Start Shell
 $prompt = "php > ";
 $buffer = '';
@@ -97,3 +88,5 @@ while (true) {
 		continue;
 	}
 }
+
+$pmgr->fire("onEnd");
