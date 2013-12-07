@@ -44,12 +44,10 @@ register_shutdown_function(function() {
 $prompt = "php > ";
 $buffer = '';
 $braceCount = 0;
-$in = '';
 while (true) {
 	// Read a line
 	$in = readline($prompt);
 	$in = trim($in);
-	$lastChar = substr($in, -1);
 
 	if ($in == "quit" || $in == "exit") {
 		break;
@@ -69,6 +67,8 @@ while (true) {
 	}
 
 	$buffer .= $in;
+
+	$lastChar = substr($in, -1);
 
 	// Have we finished building something?
 	if ($braceCount > 0 && $lastChar == '}') {
