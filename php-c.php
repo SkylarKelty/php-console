@@ -68,47 +68,21 @@ while (true) {
 		continue;
 	}
 
+	$buffer .= $in;
+
 	// Have we finished building something?
-	if ($braceCount > 0 && $in == '}') {
+	if ($braceCount > 0 && $lastChar == '}') {
 		$braceCount--;
-		$buffer .= $in;
-
-		if ($braceCount == 0) {
-			echo eval($buffer);
-			echo "\n";
-			$buffer = '';
-			$prompt = "php > ";
-		}
-
-		continue;
-	}
-
-	// Are we already building something?
-	if (!empty($buffer)) {
-		$buffer .= $in;
-		if ($lastChar == '{') {
-			$braceCount++;
-		}
-		if ($braceCount == 0 && $lastChar == ';') {
-			echo eval($buffer);
-			echo "\n";
-			$buffer = '';
-		}
-		continue;
 	}
 
 	// Are we building something?
 	if ($lastChar == '{') {
 		$prompt = "php { ";
-		$buffer = $in;
 		$braceCount++;
-		continue;
 	}
 
-	$buffer .= $in;
-
 	// Are we ready to eval?
-	if ($lastChar == ';') {
+	if ($lastChar == ';' || ($lastChar == '}' && $braceCount == 0)) {
 		// Eval
 		echo eval($buffer);
 		echo "\n";
