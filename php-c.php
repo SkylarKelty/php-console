@@ -21,6 +21,9 @@ $in = '';
 while ($in != "quit" && $in != "^D") {
 	// Read a line
 	$in = readline("php> ");
+	
+	// Add to history
+	readline_add_history($in);
 
 	// Parse and complete iteration
 	echo parse($in);
