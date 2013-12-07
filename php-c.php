@@ -9,6 +9,13 @@ if (file_exists("vendor/autoload.php")) {
 	include("vendor/autoload.php");
 }
 
+// Some overrides
+$overrides = array(
+	"cls" => function() {
+		readline_clear_history();
+	}
+);
+
 /**
  * Parse some PHP
  */
@@ -21,9 +28,15 @@ $in = '';
 while ($in != "quit" && $in != "^D") {
 	// Read a line
 	$in = readline("php> ");
-	
+
 	// Add to history
 	readline_add_history($in);
+
+	// Overrides
+	if (isset($overrides[$in])) {
+		$overrides[$in]();
+		continue;
+	}
 
 	// Parse and complete iteration
 	echo parse($in);
