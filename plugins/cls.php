@@ -3,9 +3,9 @@
  * Adds a CLS function
  */
 
-require_once("../plugin.php");
+require_once(dirname(dirname(__FILE__)) . "/plugin.php");
 
-public class cls extends phpc_plugin
+class cls extends phpc_plugin
 {
 	public function onMessage($str = '') {
 		if ($str == "cls") {

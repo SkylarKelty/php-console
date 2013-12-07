@@ -3,9 +3,9 @@
  * Persistent history extras for php console
  */
 
-require_once("../plugin.php");
+require_once(dirname(dirname(__FILE__)) . "/plugin.php");
 
-public class history extends phpc_plugin
+class history extends phpc_plugin
 {
 	private $_history_file;
 	private $_history_fp;

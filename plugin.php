@@ -3,9 +3,9 @@
  * PHP Console plugin base
  */
 
-require_once("plugin-manager.php");
+require_once(dirname(__FILE__) . "/plugin-manager.php");
 
-public abstract class phpc_plugin
+abstract class phpc_plugin
 {
 	public function isSupported() {
 		return true;
@@ -13,7 +13,7 @@ public abstract class phpc_plugin
 
 	public function onLoad() {	}
 	public function onStart() { }
-	public function onMessage($str = '') { };
+	public function onMessage($str = '') { }
 	public function onEnd() { }
 
 	public final function getManager() {

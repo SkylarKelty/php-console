@@ -3,7 +3,7 @@
  * PHP Console plugin manager
  */
 
-public class phpc_pugin_manager
+class phpc_pugin_manager
 {
 	private $_plugins;
 
@@ -33,10 +33,12 @@ public class phpc_pugin_manager
 	 * Load a plugin
 	 */
 	public function load($plugin) {
+		$plugin = str_replace(".php", "", $plugin);
 		require_once("plugins/$plugin.php");
 		$p = new $plugin();
 		if ($p->isSupported()) {
 			$this->_plugins[$plugin] = $p;
+			$p->onLoad();
 		}
 	}
 
@@ -44,13 +46,22 @@ public class phpc_pugin_manager
 	 * Load all plugins
 	 */
 	public function loadAll() {
-		$plugins = scandir("plugins/");
+		$plugins = scandir(dirname(__FILE__) . "/plugins/");
 		foreach ($plugins as $plugin) {
 			if ($plugin == '.' || $plugin == '..') {
 				continue;
 			}
 
 			$this->load($plugin);
+		}
+	}
+
+	/**
+	 * Fire an event
+	 */
+	public function fire($event) {
+		foreach ($this->_plugins as $plugin) {
+			$plugin->$event();
 		}
 	}
 }

@@ -9,6 +9,13 @@ if (file_exists("vendor/autoload.php")) {
 	include("vendor/autoload.php");
 }
 
+// Load up the plugin manager
+require_once("plugin-manager.php");
+$pmgr = phpc_pugin_manager::obtain();
+$pmgr->loadAll();
+
+$pmgr->fire("onStart");
+
 // Start Basic Shell
 $in = '';
 while ($in != "quit" && $in != "^D") {
@@ -19,3 +26,5 @@ while ($in != "quit" && $in != "^D") {
 	echo eval(trim($in));
 	echo "\n";
 }
+
+$pmgr->fire("onEnd");
