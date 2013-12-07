@@ -9,28 +9,11 @@ if (file_exists("vendor/autoload.php")) {
 	include("vendor/autoload.php");
 }
 
-// Some overrides
-$overrides = array(
-	"clh" => function() {
-		readline_clear_history();
-	},
-	"cls" => function() {
-		passthru('clear');
-	},
-);
-
 // Start Basic Shell
 $in = '';
 while ($in != "quit" && $in != "^D") {
 	// Read a line
 	$in = readline("php> ");
-
-
-	// Overrides
-	if (isset($overrides[$in])) {
-		$overrides[$in]();
-		continue;
-	}
 
 	// Parse
 	echo eval(trim($in));

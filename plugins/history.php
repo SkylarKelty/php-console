@@ -34,6 +34,14 @@ public class history extends phpc_plugin
 	}
 
 	public function onMessage($str = '') {
+		// Support clh (clear history)
+		if ($str == "clh") {
+			readline_clear_history();
+			fclose($this->_history_fp);
+			$this->_history_fp = fopen($this->_history_file, "w");
+			return true;
+		}
+
 		// Add to history
 		readline_add_history($str);
 		fwrite($this->_history_fp, $str . "\n");
