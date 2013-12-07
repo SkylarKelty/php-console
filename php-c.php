@@ -40,11 +40,14 @@ register_shutdown_function(function() {
 	$pmgr->fire("onEnd");
 });
 
-// Start Basic Shell
+// Start Shell
+$prompt = "php > ";
+$buffer = '';
+$braceCount = 0;
 $in = '';
 while (true) {
 	// Read a line
-	$in = readline("php> ");
+	$in = readline($prompt);
 
 	if ($in == "quit" || $in == "exit") {
 		break;
@@ -63,7 +66,39 @@ while (true) {
 		continue;
 	}
 
-	// Parse
+	// Have we finished building something?
+	if ($braceCount > 0 && $in == '}') {
+		$braceCount--;
+		$buffer .= $in;
+
+		if ($braceCount == 0) {
+			echo eval(trim($buffer));
+			echo "\n";
+			$buffer = '';
+			$prompt = "php> ";
+		}
+
+		continue;
+	}
+
+	// Are we already building something?
+	if ($braceCount > 0) {
+		$buffer .= $in;
+		if (strrpos($in, "{") === strlen($in) - 1) {
+			$braceCount++;
+		}
+		continue;
+	}
+
+	// Are we building something?
+	if (strrpos($in, "{") === strlen($in) - 1) {
+		$prompt = "php { ";
+		$buffer = $in;
+		$braceCount++;
+		continue;
+	}
+
+	// Eval
 	echo eval(trim($in));
 	echo "\n";
 }
