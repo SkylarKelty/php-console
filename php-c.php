@@ -11,9 +11,12 @@ if (file_exists("vendor/autoload.php")) {
 
 // Some overrides
 $overrides = array(
-	"cls" => function() {
+	"clh" => function() {
 		readline_clear_history();
-	}
+	},
+	"cls" => function() {
+		passthru('clear');
+	},
 );
 
 // Start Basic Shell
