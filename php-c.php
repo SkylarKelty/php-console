@@ -74,7 +74,7 @@ while (true) {
 		$buffer .= $in;
 
 		if ($braceCount == 0) {
-			echo eval(trim($buffer));
+			echo eval($buffer);
 			echo "\n";
 			$buffer = '';
 			$prompt = "php > ";
@@ -90,7 +90,7 @@ while (true) {
 			$braceCount++;
 		}
 		if ($braceCount == 0 && $lastChar == ';') {
-			echo eval(trim($buffer));
+			echo eval($buffer);
 			echo "\n";
 			$buffer = '';
 		}
@@ -105,13 +105,15 @@ while (true) {
 		continue;
 	}
 
-	// Are we building something else?
-	if ($lastChar != ';') {
-		$buffer .= $in;
+	$buffer .= $in;
+
+	// Are we ready to eval?
+	if ($lastChar == ';') {
+		// Eval
+		echo eval($buffer);
+		echo "\n";
+
+		$buffer = '';
 		continue;
 	}
-
-	// Eval
-	echo eval($in);
-	echo "\n";
 }
