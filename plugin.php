@@ -5,9 +5,12 @@
 
 public abstract class phpc_plugin
 {
-	public abstract function isSupported();
-	public abstract function onLoad();
-	public abstract function onStart();
-	public abstract function onMessage($str = '');
-	public abstract function onEnd();
+	public function isSupported() {
+		return true;
+	}
+
+	public function onLoad() {	}
+	public function onStart() { }
+	public function onMessage($str = '') { };
+	public function onEnd() { }
 }
