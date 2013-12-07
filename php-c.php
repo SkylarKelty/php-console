@@ -3,9 +3,23 @@
  * Provides a basic shell, with some added extras
  */
 
+// Parse arguments
+if (isset($_SERVER['argv'])) {
+	foreach ($_SERVER['argv'] as $arg) {
+		if ($arg == "-v") {
+			define("VERBOSE", true);
+		}
+	}
+}
+
+// Defaults
+defined("VERBOSE") or define("VERBOSE", false);
+
 // If there is an auto loader here, include it
 if (file_exists("vendor/autoload.php")) {
-	echo "Loading autoloader...\n";
+	if (VERBOSE) {
+		echo "Loading autoloader...\n";
+	}
 	include("vendor/autoload.php");
 }
 

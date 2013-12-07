@@ -39,8 +39,10 @@ class phpc_pugin_manager
 		if ($p->isSupported()) {
 			$this->_plugins[$plugin] = $p;
 			$p->onLoad();
-
-			echo "Loaded plugin: $plugin...\n";
+			
+			if (VERBOSE) {
+				echo "Loaded plugin: $plugin...\n";
+			}
 		}
 	}
 
