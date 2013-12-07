@@ -73,6 +73,9 @@ while (true) {
 	// Have we finished building something?
 	if ($braceCount > 0 && $lastChar == '}') {
 		$braceCount--;
+		if ($braceCount == 0) {
+			$prompt = "php > ";
+		}
 	}
 
 	// Are we building something?
@@ -82,7 +85,7 @@ while (true) {
 	}
 
 	// Are we ready to eval?
-	if ($lastChar == ';' || ($lastChar == '}' && $braceCount == 0)) {
+	if (($lastChar == ';' || $lastChar == '}') && $braceCount == 0) {
 		// Eval
 		echo eval($buffer);
 		echo "\n";
